@@ -1,5 +1,5 @@
 import { createStackNavigator } from "react-navigation-stack"
-import { WelcomeScreen, DemoScreen } from "../screens"
+import { WelcomeScreen, DemoScreen } from "../../screens"
 
 export const PrimaryNavigator = createStackNavigator(
   {

@@ -52,6 +52,7 @@ const canExit = (routeName: string) => contains(routeName, exitRoutes)
  */
 export default function App() {
   const [rootStore, setRootStore] = useState<RootStore | undefined>(undefined) // prettier-ignore
+
   useEffect(() => {
     ;(async () => {
       setupRootStore().then(setRootStore)
