@@ -3,13 +3,13 @@ import { color, spacing } from '@theme/index'
 
 export const FULL: ViewStyle = { flex: 1 }
 export const CONTAINER: ViewStyle = {
-  backgroundColor: color.transparent,
-  paddingHorizontal: spacing[4],
+  alignItems: 'center', justifyContent: 'center', flex: 1
 }
 export const TEXT: TextStyle = {
   color: color.palette.white,
   fontFamily: "Montserrat",
 }
+export const TEXT_WRAPPER: TextStyle = { flexDirection: 'row' }
 export const BOLD: TextStyle = { fontWeight: "bold" }
 export const HEADER: TextStyle = {
   paddingTop: spacing[3],
