@@ -1,9 +1,9 @@
 import { Instance, types } from "mobx-state-tree"
 import { RootNavigator } from "./root-navigator"
-import { NavigationActions, NavigationAction } from "react-navigation"
+import { CommonActions, NavigationAction, getStateFromPath, getPathFromState, getActionFromState } from "@react-navigation/native"
 import { NavigationEvents } from "./navigation-events"
 
-const DEFAULT_STATE = RootNavigator.router.getStateForAction(NavigationActions.init(), null)
+// const DEFAULT_STATE = RootNavigator.getStateForAction(CommonActions.init(), null)
 
 /**
  * Finds the current route.
@@ -27,18 +27,18 @@ export const NavigationStoreModel = NavigationEvents.named("NavigationStore")
     /**
      * the navigation state tree (Frozen here means it is immutable.)
      */
-    state: types.optional(types.frozen(), DEFAULT_STATE),
+    state: types.optional(types.frozen(), null),
   })
   .preProcessSnapshot(snapshot => {
     if (!snapshot || !snapshot.state) return snapshot
 
     try {
       // make sure react-navigation can handle our state
-      RootNavigator.router.getPathAndParamsForState(snapshot.state)
+      getPathFromState(snapshot.state)
       return snapshot
     } catch (e) {
       // otherwise restore default state
-      return { ...snapshot, state: DEFAULT_STATE }
+      return { ...snapshot, state: null }
     }
   })
   .actions(self => ({
@@ -59,7 +59,7 @@ export const NavigationStoreModel = NavigationEvents.named("NavigationStore")
      */
     dispatch(action: NavigationAction, shouldPush = true) {
       const previousNavState = shouldPush ? self.state : null
-      self.state = RootNavigator.router.getStateForAction(action, previousNavState) || self.state
+      self.state = getActionFromState(previousNavState) || self.state || self.state
       self.fireSubscribers(action, previousNavState, self.state)
       return true
     },
@@ -68,7 +68,7 @@ export const NavigationStoreModel = NavigationEvents.named("NavigationStore")
      * Resets the navigation back to the start.
      */
     reset() {
-      self.state = DEFAULT_STATE
+      self.state = null
     },
 
     /**
@@ -85,7 +85,7 @@ export const NavigationStoreModel = NavigationEvents.named("NavigationStore")
      * @param routeName The route name.
      */
     navigateTo(routeName: string) {
-      self.dispatch(NavigationActions.navigate({ routeName }))
+      self.dispatch(CommonActions.navigate(routeName))
     },
   }))
 

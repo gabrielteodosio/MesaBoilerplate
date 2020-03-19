@@ -1,7 +1,7 @@
 import { FunctionComponent, useEffect } from "react"
 import { BackHandler } from "react-native"
 import { observer } from "mobx-react-lite"
-import { NavigationActions } from "react-navigation"
+import { CommonActions } from "@react-navigation/native"
 import { useStores } from "../models/root-store"
 
 interface BackButtonHandlerProps {
@@ -26,7 +26,7 @@ export const BackButtonHandler: FunctionComponent<BackButtonHandlerProps> = obse
         return false
       } else {
         // we can't exit, so let's turn this into a back action
-        navigationStore.dispatch(NavigationActions.back())
+        navigationStore.dispatch(CommonActions.goBack())
         // let the system know we've handled this event
         return true
       }

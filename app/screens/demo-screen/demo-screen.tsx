@@ -1,85 +1,41 @@
 import * as React from "react"
-import { Image, ImageStyle, Platform, TextStyle, View, ViewStyle } from "react-native"
-import { NavigationInjectedProps } from "react-navigation"
-import { BulletItem, Button, Header, Text, Screen, Wallpaper } from "../../components"
-import { color, spacing } from "../../theme"
+import { Image, Platform, View } from "react-native"
+
 import { Api } from "../../services/api"
 import { save } from "../../utils/storage"
-export const logoIgnite = require("./logo-ignite.png")
-export const heart = require("./heart.png")
+import { color } from "../../theme"
+import { BulletItem, Button, Header, Text, Screen, Wallpaper } from "../../components"
+import { PrimaryNavigatorParamList } from "../../navigation/navigators/primary-navigator"
 
-const FULL: ViewStyle = { flex: 1 }
-const CONTAINER: ViewStyle = {
-  backgroundColor: color.transparent,
-  paddingHorizontal: spacing[4],
-}
-const DEMO: ViewStyle = {
-  paddingVertical: spacing[4],
-  paddingHorizontal: spacing[4],
-  backgroundColor: "#5D2555",
-}
-const BOLD: TextStyle = { fontWeight: "bold" }
-const DEMO_TEXT: TextStyle = {
-  ...BOLD,
-  fontSize: 13,
-  letterSpacing: 2,
-}
-const HEADER: TextStyle = {
-  paddingTop: spacing[3],
-  paddingBottom: spacing[5] - 1,
-  paddingHorizontal: 0,
-}
-const HEADER_TITLE: TextStyle = {
-  ...BOLD,
-  fontSize: 12,
-  lineHeight: 15,
-  textAlign: "center",
-  letterSpacing: 1.5,
-}
-const TITLE: TextStyle = {
-  ...BOLD,
-  fontSize: 28,
-  lineHeight: 38,
-  textAlign: "center",
-  marginBottom: spacing[5],
-}
-const TAGLINE: TextStyle = {
-  color: "#BAB6C8",
-  fontSize: 15,
-  lineHeight: 22,
-  marginBottom: spacing[4] + spacing[1],
-}
-const IGNITE: ImageStyle = {
-  marginVertical: spacing[6],
-  alignSelf: "center",
-}
-const LOVE_WRAPPER: ViewStyle = {
-  flexDirection: "row",
-  alignItems: "center",
-  alignSelf: "center",
-}
-const LOVE: TextStyle = {
-  color: "#BAB6C8",
-  fontSize: 15,
-  lineHeight: 22,
-}
-const HEART: ImageStyle = {
-  marginHorizontal: spacing[2],
-  width: 10,
-  height: 10,
-  resizeMode: "contain",
-}
-const HINT: TextStyle = {
-  color: "#BAB6C8",
-  fontSize: 12,
-  lineHeight: 15,
-  marginVertical: spacing[2],
+import { RouteProp, NavigationProp } from "@react-navigation/native"
+
+import {
+  DEMO,
+  FULL,
+  HINT,
+  LOVE,
+  TITLE,
+  HEART,
+  HEADER,
+  IGNITE,
+  TAGLINE,
+  DEMO_TEXT,
+  CONTAINER,
+  HEADER_TITLE,
+  LOVE_WRAPPER,
+} from "./demo.styles"
+
+export const heart = require("./assets/heart.png")
+export const logoIgnite = require("./assets/logo-ignite.png")
+
+interface DemoScreenProps {
+  children?: React.ComponentType
+  route: RouteProp<PrimaryNavigatorParamList, "Demo">
+  navigation: NavigationProp<PrimaryNavigatorParamList, "Demo">
 }
 
-export interface DemoScreenProps extends NavigationInjectedProps<{}> {}
-
-export const DemoScreen: React.FunctionComponent<DemoScreenProps> = props => {
-  const goBack = React.useMemo(() => () => props.navigation.goBack(null), [props.navigation])
+export const DemoScreen: React.FC<DemoScreenProps> = ({ navigation }) => {
+  const goBack = React.useMemo(() => () => navigation.goBack(), [navigation])
 
   const demoReactotron = React.useMemo(
     () => async () => {
@@ -99,7 +55,9 @@ export const DemoScreen: React.FunctionComponent<DemoScreenProps> = props => {
               },
             },
           },
-          functionNames: function hello() { /* dummy function */ },
+          functionNames: function hello() {
+            /* dummy function */
+          },
         },
         preview: "More control with display()",
         important: true,

@@ -21,6 +21,8 @@
       "@components/*": ["./app/components/*"],
       "@models/*": ["./app/models/*"],
       "@screens/*": ["./app/screens/*"],
+      "@navigation": ["./app/navigation/*"],
+      "@navigators": ["./app/navigation/navigators/*"],
       "@theme/*": ["./app/theme/*"],
       "@transitions/*": ["./app/theme/transitions/*"],
     }
